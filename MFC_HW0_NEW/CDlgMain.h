@@ -145,4 +145,6 @@ public:
 	afx_msg void OnModeZeros();
 	afx_msg void OnUpdateModeZeros(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateModeValue(CCmdUI *pCmdUI);
+	afx_msg void OnScreenDraw();
+	afx_msg void OnScreenClear();
 };

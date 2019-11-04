@@ -44,6 +44,8 @@ BEGIN_MESSAGE_MAP(CDlgMain, CDialogEx)
 	ON_COMMAND(ID_MODE_ZEROS, &CDlgMain::OnModeZeros)
 	ON_UPDATE_COMMAND_UI(ID_MODE_ZEROS, &CDlgMain::OnUpdateModeZeros)
 	ON_UPDATE_COMMAND_UI(ID_MODE_VALUE, &CDlgMain::OnUpdateModeValue)
+	ON_COMMAND(ID_SCREEN_DRAW, &CDlgMain::OnScreenDraw)
+	ON_COMMAND(ID_SCREEN_CLEAR, &CDlgMain::OnScreenClear)
 END_MESSAGE_MAP()
 
 
@@ -52,20 +54,7 @@ END_MESSAGE_MAP()
 
 void CDlgMain::OnBnClickedbtndraw()
 {
-	// TODO: Add your control notification handler code here
-	CClientDC* pDC = new CClientDC(this);	
-	//RECT rect;
-	CRect rect;
-	GetClientRect(&rect);
-	w_param = rect.right;
-	h_param = rect.bottom;
-	if (s_param < 0)
-		s_param = w_param / 10;
 
-
-	drawFunction(pDC);
-	delete pDC;
-	//UpdateWindow();
 	
 }
 
@@ -79,10 +68,7 @@ void CDlgMain::OnDraw() {
 void CDlgMain::OnBnClickedbtnclear()
 {
 	// TODO: Add your control notification handler code here
-	CRect r;
-	GetClientRect(r);
-	InvalidateRect(r);
-	PostMessageW(WM_PAINT);
+
 }
 
 
@@ -119,4 +105,33 @@ void CDlgMain::OnUpdateModeValue(CCmdUI *pCmdUI)
 		men->CheckMenuItem(ID_MODE_VALUE, MF_CHECKED | MF_BYCOMMAND);
 		men->CheckMenuItem(ID_MODE_ZEROS, MF_UNCHECKED | MF_BYCOMMAND);
 	}
+}
+
+
+void CDlgMain::OnScreenDraw()
+{
+	// TODO: Add your command handler code here
+	CClientDC* pDC = new CClientDC(this);
+	
+	CRect rect;
+	GetClientRect(&rect);
+	w_param = rect.right;
+	h_param = rect.bottom;
+	if (s_param < 0) //Initialize S
+		s_param = w_param / 10;
+
+	drawFunction(pDC);
+
+	delete pDC;
+	UpdateWindow();
+}
+
+
+void CDlgMain::OnScreenClear()
+{
+	// TODO: Add your command handler code here
+	CRect r;
+	GetClientRect(r);
+	InvalidateRect(r);
+	PostMessageW(WM_PAINT);
 }
